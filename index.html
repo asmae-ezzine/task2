@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Network Traffic Analyzer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+        }
+        #alerts {
+            margin: 20px 0;
+            padding: 20px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .alert {
+            padding: 10px;
+            margin: 10px 0;
+            border-left: 6px solid #ff6f61;
+            background-color: #ffe6e6;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Network Traffic Analyzer</h1>
+        <div id="alerts">
+            <h2>Alerts</h2>
+            <div id="alert-list"></div>
+        </div>
+    </div>
+    <script>
+        function fetchAlerts() {
+            fetch('/alerts')
+                .then(response => response.json())
+                .then(data => {
+                    const alertList = document.getElementById('alert-list');
+                    alertList.innerHTML = '';
+                    data.forEach(alert => {
+                        const alertDiv = document.createElement('div');
+                        alertDiv.className = 'alert';
+                        alertDiv.innerText = alert;
+                        alertList.appendChild(alertDiv);
+                    });
+                });
+        }
+
+        setInterval(fetchAlerts, 5000);
+    </script>
+</body>
+</html>
+
